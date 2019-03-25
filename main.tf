@@ -69,7 +69,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
 
-  aliases = [ "${merge(var.domain_name,var.domain_aliases)}" ]
+  aliases = [ "${concat(list(var.domain_name),var.domain_aliases)}" ]
 
   default_cache_behavior {
     allowed_methods = [
