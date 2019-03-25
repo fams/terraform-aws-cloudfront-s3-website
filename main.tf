@@ -50,28 +50,6 @@ resource "aws_s3_bucket" "s3_bucket" {
   tags = "${var.tags}"
 }
 
-data "aws_route53_zone" "domain_name" {
-  name         = "${var.hosted_zone}"
-  private_zone = false
-}
-
-resource "aws_route53_record" "route53_record" {
-  depends_on = [
-    "aws_cloudfront_distribution.s3_distribution",
-  ]
-
-  zone_id = "${data.aws_route53_zone.domain_name.zone_id}"
-  name    = "${var.domain_name}"
-  type    = "A"
-
-  alias {
-    name    = "${aws_cloudfront_distribution.s3_distribution.domain_name}"
-    zone_id = "Z2FDTNDATAQYW2"
-
-    //HardCoded value for CloudFront
-    evaluate_target_health = false
-  }
-}
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   depends_on = [
@@ -92,7 +70,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   default_root_object = "index.html"
 
   aliases = [
-    "${var.domain_name}",
+    "${var.domain_aliases}",
   ]
 
   default_cache_behavior {
@@ -122,9 +100,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     max_ttl                = 31536000
   }
 
-  price_class = "PriceClass_100"
+  price_class = "PriceClass_All"
 
-  //Only US,Canada,Europe
 
   restrictions {
     geo_restriction {
