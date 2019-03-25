@@ -7,3 +7,8 @@ variable "tags" {
 }
 
 variable "hosted_zone" {}
+
+variable "domain_aliases" {
+  type  = list
+  default = {}
+}
