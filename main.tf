@@ -3,16 +3,16 @@ provider "aws" {
   alias  = "aws_cloudfront"
 }
 
-data "aws_acm_certificate" "acm_cert" {
-  domain   = "*.${var.hosted_zone}"
-  provider = "aws.aws_cloudfront"
+# data "aws_acm_certificate" "acm_cert" {
+#   domain   = "*.${var.hosted_zone}"
+#   provider = "aws.aws_cloudfront"
 
-  //CloudFront uses certificates from US-EAST-1 region only
+#   //CloudFront uses certificates from US-EAST-1 region only
 
-  statuses = [
-    "ISSUED",
-  ]
-}
+#   statuses = [
+#     "ISSUED",
+#   ]
+# }
 
 data "aws_iam_policy_document" "s3_bucket_policy" {
   statement {
