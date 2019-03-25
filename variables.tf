@@ -12,3 +12,7 @@ variable "domain_aliases" {
   type  = "list"
   default = []
 }
+
+variable "acm_cert_arn" {
+
+}
